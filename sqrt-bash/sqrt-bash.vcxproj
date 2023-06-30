@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\src\Camera.cpp" />
     <ClCompile Include="src\src\glWindow.cpp" />
     <ClCompile Include="src\src\Mesh.cpp" />
     <ClCompile Include="src\imgui\imgui.cpp" />
@@ -29,6 +30,7 @@
     <ClCompile Include="src\src\Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\src\Camera.h" />
     <ClInclude Include="src\src\glWindow.h" />
     <ClInclude Include="src\src\Mesh.h" />
     <ClInclude Include="src\imgui\imconfig.h" />
