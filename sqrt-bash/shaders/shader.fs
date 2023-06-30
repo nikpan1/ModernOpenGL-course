@@ -1,6 +1,10 @@
-#version 330 core
-layout(location = 0) out vec4 color;
+#version 330
+
+in vec4 vCol;
+
+out vec4 colour;
+
 void main()
 {
-   color = vec4(0.2, 0.3, 0.8, 1.0);
+	colour = vCol;
 }

@@ -19,13 +19,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\src\glWindow.cpp" />
+    <ClCompile Include="src\src\Mesh.cpp" />
     <ClCompile Include="src\imgui\imgui.cpp" />
     <ClCompile Include="src\imgui\imgui_demo.cpp" />
     <ClCompile Include="src\imgui\imgui_draw.cpp" />
     <ClCompile Include="src\imgui\imgui_impl_glfw_gl3.cpp" />
     <ClCompile Include="src\src\main.cpp" />
+    <ClCompile Include="src\src\Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\src\glWindow.h" />
+    <ClInclude Include="src\src\Mesh.h" />
     <ClInclude Include="src\imgui\imconfig.h" />
     <ClInclude Include="src\imgui\imgui.h" />
     <ClInclude Include="src\imgui\imgui_impl_glfw_gl3.h" />
@@ -33,6 +38,7 @@
     <ClInclude Include="src\imgui\stb_rect_pack.h" />
     <ClInclude Include="src\imgui\stb_textedit.h" />
     <ClInclude Include="src\imgui\stb_truetype.h" />
+    <ClInclude Include="src\src\Shader.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
