@@ -28,6 +28,7 @@
     <ClCompile Include="src\imgui\imgui_impl_glfw_gl3.cpp" />
     <ClCompile Include="src\src\main.cpp" />
     <ClCompile Include="src\src\Shader.cpp" />
+    <ClCompile Include="src\src\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\src\Camera.h" />
@@ -41,6 +42,16 @@
     <ClInclude Include="src\imgui\stb_textedit.h" />
     <ClInclude Include="src\imgui\stb_truetype.h" />
     <ClInclude Include="src\src\Shader.h" />
+    <ClInclude Include="src\src\Texture.h" />
+    <ClInclude Include="src\src\stb_image.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="textures\brick.png" />
+    <Image Include="textures\sky.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\shader.frag" />
+    <None Include="shaders\shader.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
