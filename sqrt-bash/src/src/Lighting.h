@@ -9,7 +9,7 @@ public:
 	Light(GLfloat red, GLfloat green, GLfloat blue, GLfloat aIntensity);
 	~Light();
 
-	void Use(GLfloat ambientIntensityLoc, GLfloat ambientColorLoc);
+	void Use(GLuint ambientIntensityLoc, GLuint ambientColorLoc);
 
 private:
 	glm::vec3 color;
@@ -28,7 +28,7 @@ public:
 
 	~Diffuse();
 
-	void Use(GLfloat ambientIntensityLoc, GLfloat ambienColorLoc, 
+	void Use(GLuint ambientIntensityLoc, GLfloat ambienColorLoc, 
 				GLfloat diffuseIntensityLoc, GLfloat directionLocation);
 
 private:

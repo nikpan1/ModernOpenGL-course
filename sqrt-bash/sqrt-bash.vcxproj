@@ -22,6 +22,7 @@
     <ClCompile Include="src\src\Camera.cpp" />
     <ClCompile Include="src\src\glWindow.cpp" />
     <ClCompile Include="src\src\Lighting.cpp" />
+    <ClCompile Include="src\src\Material.cpp" />
     <ClCompile Include="src\src\Mesh.cpp" />
     <ClCompile Include="src\imgui\imgui.cpp" />
     <ClCompile Include="src\imgui\imgui_demo.cpp" />
@@ -35,6 +36,7 @@
     <ClInclude Include="src\src\Camera.h" />
     <ClInclude Include="src\src\glWindow.h" />
     <ClInclude Include="src\src\Lighting.h" />
+    <ClInclude Include="src\src\Material.h" />
     <ClInclude Include="src\src\Mesh.h" />
     <ClInclude Include="src\imgui\imconfig.h" />
     <ClInclude Include="src\imgui\imgui.h" />

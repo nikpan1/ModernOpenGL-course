@@ -93,6 +93,21 @@ GLuint Shader::GetDirectionLocation()
 	return uniformDirection;
 }
 
+GLuint Shader::GetSpecularDensityLocation()
+{
+	return uniformSpecularIntensity;
+}
+
+GLuint Shader::GetShininessLocation()
+{
+	return uniformShininess;
+}
+
+GLuint Shader::GetEyePosition()
+{
+	return uniformEyePosition;
+}
+
 void Shader::Compile(const char* vertexCode, const char* fragmentCode)
 {
 	shaderID = glCreateProgram();
@@ -133,7 +148,14 @@ void Shader::Compile(const char* vertexCode, const char* fragmentCode)
 
 	uniformDiffuseIntensity = glGetUniformLocation(shaderID, "directionalLight.diffuseIntensity");
 	uniformDirection = glGetUniformLocation(shaderID, "directionalLight.direction");
+
+	uniformEyePosition = glGetUniformLocation(shaderID, "eyePosition");
+	uniformShininess = glGetUniformLocation(shaderID, "material.shininess");
+	uniformSpecularIntensity = glGetUniformLocation(shaderID, "material.specularIntensity");
+
 }
+
+
 
 void Shader::Add(GLuint theProgram, const char* shaderCode, GLenum shaderType)
 {
@@ -150,10 +172,12 @@ void Shader::Add(GLuint theProgram, const char* shaderCode, GLenum shaderType)
 	GLint result = 0;
 	GLchar eLog[1024] = { 0 };
 
+	// 		shaderType	0x00008b31	VERT
+	//					0x00008B30	FRAG	35632 	
 	glGetShaderiv(theShader, GL_COMPILE_STATUS, &result);
 	if (!result) {
 		glGetProgramInfoLog(shaderID, sizeof(eLog), NULL, eLog);
-		printf("compile shader error \n%s\n", eLog);
+		printf("compile shader error[%d] \n%s\n", shaderType, eLog);
 		return;
 	}
 

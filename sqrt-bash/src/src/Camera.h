@@ -16,6 +16,7 @@ public:
 	void keyControl(bool* keys, GLfloat deltaTime);	// @TODO change it to more advanced event system
 	void mouseControl(GLfloat xChange, GLfloat yChange);
 	glm::mat4 calculateViewMatrix();
+	glm::vec3 getCameraPosition();
 
 private:
 	glm::vec3 position;

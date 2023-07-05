@@ -20,10 +20,11 @@
 #include "Camera.h"
 #include "Texture.h"
 #include "Lighting.h"
+#include "Material.h"
 
 
 
-const GLint WIDTH = 800, HEIGHT = 600;
+const GLint WIDTH = 1280, HEIGHT = 1024;
 const float toRadians = 3.14159265f / 180.f;
 
 Window* mainWindow;
@@ -36,7 +37,7 @@ Texture* skyTexture;
 
 Light mainLight;
 Diffuse diffuseLight;
-
+Material shinyMaterial;
 
 GLfloat deltaTime = 0.f;
 GLfloat lastTime = 0.f;
@@ -79,9 +80,9 @@ void CreateObject() {
 	GLfloat vertices[] = {
 	//		position			 texture		  light
 	//  x		y		z		  u    v		nx	 ny	   nz
-		-1.0f, -1.0f, 0.0f,		 0.f, 0.f,		0.f, 0.f, 0.f,
+		-1.0f, -1.0f, -0.6f,		 0.f, 0.f,		0.f, 0.f, 0.f,
 		0.0f, -1.0f, 1.0f,	     0.5f, 0.f, 	0.f, 0.f, 0.f,
-		1.0f, -1.0f, 0.0f,		 1.f, 0.f, 		0.f, 0.f, 0.f,
+		1.0f, -1.0f, -0.6f,		 1.f, 0.f, 		0.f, 0.f, 0.f,
 		0.0f, 1.0f, 0.0f,		 0.5f, 1.f,		0.f, 0.f, 0.f
 	};
 
@@ -113,15 +114,21 @@ int main() {
 	CreateObject();
 	CreateShaders();
 	
-	camera = new Camera(glm::vec3(0.f, 0.f, 1.f), glm::vec3(0.f, 1.f, 0.f), -90.f, 0.f, 5.f, 0.5f);
+	camera = new Camera(glm::vec3(0.f, 0.f, 1.f), 
+						glm::vec3(0.f, 1.f, 0.f), 
+						-90.f, 0.f, 2.f, 0.1f);
 	
 	std::string path = "textures/brick.png";
 	brickTexture = new Texture(path.c_str());
 	brickTexture->Load();	
+	
+	shinyMaterial = Material(1.f, 32);
 
 	//mainLight = Light(1.f, 1.f, 1.f, 1.0f);		// not used
-	diffuseLight = Diffuse(1.f, 1.f, 1.f, 0.2f, 
-		2.f, -1.f, -2.f, 1.f);
+	diffuseLight = Diffuse(1.f, 1.f, 1.f, 
+							0.1f, 
+							2.f, -1.f, -2.f, 
+							0.1f);
 
 
 	float FOV = 45.f;
@@ -131,7 +138,8 @@ int main() {
 
 	GLuint uniformProjection{ 0 }, uniformModel{ 0 }, uniformView { 0 },
 		uniformAmbientIntensity{ 0 }, uniformAmbientColor{ 0 },
-		uniformDirection{ 0 }, uniformDiffuseIntensity{ 0 };
+		uniformDirection{ 0 }, uniformDiffuseIntensity{ 0 },
+		uniformEyePosition{ 0 }, uniformSpecularIntensity{ 0 }, uniformShininess{ 0 };
 
 	glm::mat4 model = glm::mat4(1.0f);
 
@@ -160,24 +168,36 @@ int main() {
 		
 		uniformDirection = shaderList[0]->GetDirectionLocation();
 		uniformDiffuseIntensity = shaderList[0]->GetDiffusionIntensityLocation();
+		
+		uniformEyePosition = shaderList[0]->GetEyePosition();
+		uniformSpecularIntensity = shaderList[0]->GetSpecularDensityLocation();
+		uniformShininess = shaderList[0]->GetShininessLocation();
+
+
 
 		diffuseLight.Use(uniformAmbientIntensity, uniformAmbientColor, uniformDiffuseIntensity, uniformDirection);
 
 		// it's important to initialize an indetity matrix with constructor
 		model = glm::mat4(1.0f);
 		// the order is important	p v m
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -2.0f));
+		model = glm::translate(model, glm::vec3(0.f, -2.f, -2.f));
 		model = glm::rotate(model, 100.f * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		model = glm::scale(model, glm::vec3(1.f, 1.f, 1.f));
 
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
+		glUniform3f(uniformEyePosition, camera->getCameraPosition().x, 
+			camera->getCameraPosition().y, camera->getCameraPosition().z);
+
 		glUniformMatrix4fv(uniformView, 1, GL_FALSE, 
 							glm::value_ptr(camera->calculateViewMatrix()));
 		
 		brickTexture->Use();
-
+		shinyMaterial.Use(uniformSpecularIntensity, uniformShininess);
+		
 		meshList[0]->Render();
+		
+		
 		glUseProgram(0);
 	
 		mainWindow->swapBuffers();

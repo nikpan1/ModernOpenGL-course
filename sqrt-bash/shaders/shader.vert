@@ -8,6 +8,7 @@ layout (location = 2) in vec3 norm;
 out vec4 vCol;
 out vec2 TexCoord;
 out vec3 Normal;
+out vec3 FragPos;
 
 uniform mat4 model;
 uniform mat4 projection;
@@ -23,6 +24,11 @@ void main()
 
 	// !!! write the explenation - https://learnopengl.com/Lighting/Basic-Lighting
 	Normal = mat3(transpose(inverse(model))) * norm;
+
+	// object position in world passed to fragment shader
+	FragPos = (model * vec4(pos, 1.0f)).xyz;	
+	// [.].xyz - swizzeling in opengl | in this case vec4 -> vec3
+
 }
 
 

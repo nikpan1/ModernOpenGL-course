@@ -17,7 +17,7 @@ Light::~Light()
 {
 }
 
-void Light::Use(GLfloat ambientIntensityLoc, GLfloat ambientColorLoc)
+void Light::Use(GLuint ambientIntensityLoc, GLuint ambientColorLoc)
 {
 	glUniform3f(ambientColorLoc, color.x, color.y, color.z);
 	glUniform1f(ambientIntensityLoc, ambientIntensity);
@@ -42,7 +42,7 @@ Diffuse::~Diffuse() {
 
 }
 
-void Diffuse::Use(GLfloat ambientIntensityLoc, GLfloat ambientColorLoc,
+void Diffuse::Use(GLuint ambientIntensityLoc, GLfloat ambientColorLoc,
 					GLfloat diffuseIntensityLoc, GLfloat directionLocation) {
 	Light::Use(ambientIntensityLoc, ambientColorLoc);
 

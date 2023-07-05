@@ -25,13 +25,20 @@ public:
 	GLuint GetViewLocation();
 	GLuint GetAmbientIntensityLocation();
 	GLuint GetAmbientColorLocation();
+
 	GLuint GetDiffusionIntensityLocation();
 	GLuint GetDirectionLocation();
+
+	GLuint GetSpecularDensityLocation();
+	GLuint GetShininessLocation();
+	
+	GLuint GetEyePosition();
 
 private:
 	GLuint shaderID, uniformProjection, uniformModel, uniformView,
 		uniformAmbientIntensity, uniformAmbientColor,
-		uniformDiffuseIntensity, uniformDirection;
+		uniformDiffuseIntensity, uniformDirection,
+		uniformEyePosition, uniformSpecularIntensity, uniformShininess;
 	void Compile(const char* vertexCode, const char* fragmentCode);
 	void Add(GLuint theProgram, const char* shaderCode, GLenum shaderType);
 };
