@@ -19,7 +19,7 @@
 #include "glWindow.h"
 #include "Camera.h"
 #include "Texture.h"
-#include "Lighting.h"
+#include "DirectionalLight.h"
 #include "Material.h"
 
 
@@ -35,8 +35,7 @@ Camera* camera;
 Texture* brickTexture;
 Texture* skyTexture;
 
-Light mainLight;
-Diffuse diffuseLight;
+DirectionalLight mainLight;
 Material shinyMaterial;
 
 GLfloat deltaTime = 0.f;
@@ -124,11 +123,9 @@ int main() {
 	
 	shinyMaterial = Material(1.f, 32);
 
-	//mainLight = Light(1.f, 1.f, 1.f, 1.0f);		// not used
-	diffuseLight = Diffuse(1.f, 1.f, 1.f, 
-							0.1f, 
-							2.f, -1.f, -2.f, 
-							0.1f);
+	mainLight = DirectionalLight(1.f, 1.f, 1.f,
+									0.1f, 0.3f,
+									2.f, 0.f, -2.f);
 
 
 	float FOV = 45.f;
@@ -137,8 +134,6 @@ int main() {
 	glm::mat4 projection = glm::perspective(FOV, aspect_ratio, zNear, zFar);
 
 	GLuint uniformProjection{ 0 }, uniformModel{ 0 }, uniformView { 0 },
-		uniformAmbientIntensity{ 0 }, uniformAmbientColor{ 0 },
-		uniformDirection{ 0 }, uniformDiffuseIntensity{ 0 },
 		uniformEyePosition{ 0 }, uniformSpecularIntensity{ 0 }, uniformShininess{ 0 };
 
 	glm::mat4 model = glm::mat4(1.0f);
@@ -163,19 +158,12 @@ int main() {
 		uniformModel = shaderList[0]->GetModelLocation();
 		uniformView = shaderList[0]->GetViewLocation();
 		
-		uniformAmbientColor = shaderList[0]->GetAmbientColorLocation();
-		uniformAmbientIntensity = shaderList[0]->GetAmbientIntensityLocation();
-		
-		uniformDirection = shaderList[0]->GetDirectionLocation();
-		uniformDiffuseIntensity = shaderList[0]->GetDiffusionIntensityLocation();
-		
 		uniformEyePosition = shaderList[0]->GetEyePosition();
 		uniformSpecularIntensity = shaderList[0]->GetSpecularDensityLocation();
 		uniformShininess = shaderList[0]->GetShininessLocation();
 
+		shaderList[0]->SetDirectionalLight(&mainLight);
 
-
-		diffuseLight.Use(uniformAmbientIntensity, uniformAmbientColor, uniformDiffuseIntensity, uniformDirection);
 
 		// it's important to initialize an indetity matrix with constructor
 		model = glm::mat4(1.0f);
