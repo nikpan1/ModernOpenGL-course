@@ -90,7 +90,7 @@ vec4 CalcPointLights()
 							pointLights[i].linear * distance +
 							pointLights[i].constant;
 		
-		totalColour += (color / attenuation);
+		totalColor += (color / attenuation);
 	}
 	
 	return totalColor;

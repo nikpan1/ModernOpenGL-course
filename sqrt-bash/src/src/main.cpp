@@ -22,6 +22,9 @@
 #include "DirectionalLight.h"
 #include "Material.h"
 
+#include "config.h"
+#include "PointLight.h"
+
 
 
 const GLint WIDTH = 1280, HEIGHT = 1024;
@@ -33,9 +36,10 @@ std::vector<Shader*> shaderList;
 Camera* camera;
 
 Texture* brickTexture;
-Texture* skyTexture;
+Texture* plainTexture;
 
 DirectionalLight mainLight;
+PointLight pointLights[MAX_POINTS_LIGHTS];
 Material shinyMaterial;
 
 GLfloat deltaTime = 0.f;
@@ -94,9 +98,27 @@ void CreateObject() {
 	
 	calcAvgNormals(indices, 12, vertices, 32, 8, 5);
 
+
+	unsigned int floorIndices[] = {
+		0, 2, 1,
+		1, 2, 3
+	};
+
+	GLfloat floorVertices[] = {
+		-10.0f, 0.0f, -10.0f,	0.0f, 0.0f,		0.0f, -1.0f, 0.0f,
+		10.0f, 0.0f, -10.0f,	10.0f, 0.0f,	0.0f, -1.0f, 0.0f,
+		-10.0f, 0.0f, 10.0f,	0.0f, 10.0f,	0.0f, -1.0f, 0.0f,
+		10.0f, 0.0f, 10.0f,		10.0f, 10.0f,	0.0f, -1.0f, 0.0f
+	};
+
+
 	Mesh* obj1 = new Mesh();
 	obj1->Create(vertices, indices, 32, 12, 3);
 	meshList.push_back(obj1);
+
+	Mesh* obj2 = new Mesh();
+	obj2->Create(floorVertices, floorIndices, 32, 12, 3);
+	meshList.push_back(obj2);
 }
 
 void CreateShaders() {
@@ -120,13 +142,30 @@ int main() {
 	std::string path = "textures/brick.png";
 	brickTexture = new Texture(path.c_str());
 	brickTexture->Load();	
+
+	std::string path2 = "textures/plain.png";
+	plainTexture = new Texture(path2.c_str());
+	plainTexture->Load();
 	
 	shinyMaterial = Material(1.f, 32);
 
 	mainLight = DirectionalLight(1.f, 1.f, 1.f,
-									0.1f, 0.3f,
+									0.3f, 0.6f,
 									2.f, 0.f, -2.f);
+	
+	unsigned int pointLightCount = 0;
 
+	pointLights[0] = PointLight(0.f, 0.f, 1.f,
+		0.1f, 0.3f,
+		-4.f, 0., 0.f,
+		0.3f, 0.2f, 0.1f);
+	pointLightCount++;
+
+	pointLights[1] = PointLight(0.f, 1.f, 0.f,
+		0.1f, 1.f,
+		-4.f, 2.f, 0.f,
+		0.3f, 0.1f, 0.1f);
+	pointLightCount++;
 
 	float FOV = 45.f;
 	float aspect_ratio = mainWindow->getBufferWidth() / mainWindow->getBufferHeight();
@@ -163,7 +202,7 @@ int main() {
 		uniformShininess = shaderList[0]->GetShininessLocation();
 
 		shaderList[0]->SetDirectionalLight(&mainLight);
-
+		shaderList[0]->SetPointLights(pointLights, pointLightCount);
 
 		// it's important to initialize an indetity matrix with constructor
 		model = glm::mat4(1.0f);
@@ -184,6 +223,7 @@ int main() {
 		shinyMaterial.Use(uniformSpecularIntensity, uniformShininess);
 		
 		meshList[0]->Render();
+		meshList[1]->Render();
 		
 		
 		glUseProgram(0);

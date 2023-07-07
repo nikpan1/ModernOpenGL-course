@@ -36,6 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\src\Camera.h" />
+    <ClInclude Include="src\src\config.h" />
     <ClInclude Include="src\src\DirectionalLight.h" />
     <ClInclude Include="src\src\glWindow.h" />
     <ClInclude Include="src\src\Lighting.h" />
