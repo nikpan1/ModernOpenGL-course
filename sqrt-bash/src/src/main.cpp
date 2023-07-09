@@ -26,7 +26,6 @@
 #include "PointLight.h"
 
 
-
 const GLint WIDTH = 1280, HEIGHT = 1024;
 const float toRadians = 3.14159265f / 180.f;
 
@@ -201,7 +200,7 @@ int main() {
 		uniformSpecularIntensity = shaderList[0]->GetSpecularDensityLocation();
 		uniformShininess = shaderList[0]->GetShininessLocation();
 
-		shaderList[0]->SetDirectionalLight(&mainLight);
+		shaderList[0]->SetDirectionalLights(&mainLight);
 		shaderList[0]->SetPointLights(pointLights, pointLightCount);
 
 		// it's important to initialize an indetity matrix with constructor
