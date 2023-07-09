@@ -11,7 +11,8 @@ public:
 
 	~Texture();
 
-	void Load();
+	bool Load();
+	bool LoadA(); // with alpha channel
 	void Use();
 	void Clear();
 private:

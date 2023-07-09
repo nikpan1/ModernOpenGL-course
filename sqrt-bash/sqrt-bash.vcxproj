@@ -30,8 +30,10 @@
     <ClCompile Include="src\imgui\imgui_draw.cpp" />
     <ClCompile Include="src\imgui\imgui_impl_glfw_gl3.cpp" />
     <ClCompile Include="src\src\main.cpp" />
+    <ClCompile Include="src\src\Model.cpp" />
     <ClCompile Include="src\src\PointLight.cpp" />
     <ClCompile Include="src\src\Shader.cpp" />
+    <ClCompile Include="src\src\SpotLight.cpp" />
     <ClCompile Include="src\src\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -49,8 +51,10 @@
     <ClInclude Include="src\imgui\stb_rect_pack.h" />
     <ClInclude Include="src\imgui\stb_textedit.h" />
     <ClInclude Include="src\imgui\stb_truetype.h" />
+    <ClInclude Include="src\src\Model.h" />
     <ClInclude Include="src\src\PointLight.h" />
     <ClInclude Include="src\src\Shader.h" />
+    <ClInclude Include="src\src\SpotLight.h" />
     <ClInclude Include="src\src\Texture.h" />
     <ClInclude Include="src\src\stb_image.h" />
   </ItemGroup>
@@ -175,14 +179,14 @@
       <PreprocessorDefinitions>GLEW_STATIC;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)bin\glfw\include;$(SolutionDir)bin\glew\include;$(SolutionDir)bin\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)bin\glfw\include;$(SolutionDir)bin\glew\include;$(SolutionDir)bin\glm;$(SolutionDir)bin\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;User32.lib;gdi32.lib;shell32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)bin\glew\lib;$(SolutionDir)bin\glfw\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;User32.lib;assimp-vc143-mtd.lib;gdi32.lib;shell32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)bin\glew\lib;$(SolutionDir)bin\glfw\lib;$(SolutionDir)bin\assimp\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

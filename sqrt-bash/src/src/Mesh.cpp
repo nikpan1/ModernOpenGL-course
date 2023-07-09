@@ -9,8 +9,8 @@ Mesh::Mesh() {
 }
 
 void Mesh::Create(GLfloat* vertices, unsigned int* indices, 
-					unsigned int numOfVertices, unsigned int numOfIndices, unsigned int attribPointerSize=3) {
-	
+					unsigned int numOfVertices, unsigned int numOfIndices) {
+	unsigned int attribPointerSize = 3; // @TODO remove it 
 	indexCount = numOfIndices;
 	
 	glGenVertexArrays(1, &VAO);

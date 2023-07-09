@@ -88,6 +88,28 @@ void Shader::SetPointLights(PointLight* pLight, unsigned int lightCount)
 	}
 }
 
+void Shader::SetSpotLights(SpotLight* pLight, unsigned int lightCount)
+{
+	if (lightCount > MAX_SPOT_LIGHTS) lightCount = MAX_SPOT_LIGHTS;
+
+	glUniform1i(uniformSpotLightCount, lightCount);
+
+	for (size_t i = 0; i < lightCount; i++)
+	{
+		pLight[i].Use(
+			uniformSpotLight[i].uniformAmbientIntensity,
+			uniformSpotLight[i].uniformColor,
+			uniformSpotLight[i].uniformDiffuseIntensity,
+			uniformSpotLight[i].uniformPosition,
+			uniformSpotLight[i].uniformDirection,
+			uniformSpotLight[i].uniformConstant,
+			uniformSpotLight[i].uniformLinear,
+			uniformSpotLight[i].uniformExponent,
+			uniformSpotLight[i].uniformEdge
+		);
+	}
+}
+
 GLuint Shader::GetProjectionLocation()
 {
     return uniformProjection;
@@ -214,7 +236,7 @@ void Shader::Compile(const char* vertexCode, const char* fragmentCode)
 
 	for (size_t i = 0; i < MAX_SPOT_LIGHTS; i++) {
 		char locBuff[100] = { '\0' };
-		snprintf(locBuff, sizeof(locBuff), "spotLights[%d].base.color", i);
+		snprintf(locBuff, sizeof(locBuff), "spotLights[%d].base.base.color", i);
 		uniformSpotLight[i].uniformColor = glGetUniformLocation(shaderID, locBuff);
 
 		snprintf(locBuff, sizeof(locBuff), "spotLights[%d].base.base.ambientIntensity", i);
