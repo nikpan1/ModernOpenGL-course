@@ -121,6 +121,8 @@ void CreateObject() {
 	Mesh* obj2 = new Mesh();
 	obj2->Create(floorVertices, floorIndices, 32, 12);
 	meshList.push_back(obj2);
+
+	xwing.LoadModel("Models/x-wing.obj");
 }
 
 void CreateShaders() {
@@ -141,11 +143,11 @@ int main() {
 						glm::vec3(0.f, 1.f, 0.f), 
 						-90.f, 0.f, 2.f, 0.1f);
 	
-	std::string path = "textures/plain.png";
+	std::string path = "Textures/plain.png";
 	brickTexture = new Texture(path.c_str());
 	brickTexture->Load();	
 
-	std::string path2 = "textures/plain.png";
+	std::string path2 = "Textures/plain.png";
 	plainTexture = new Texture(path2.c_str());
 	plainTexture->Load();
 	
